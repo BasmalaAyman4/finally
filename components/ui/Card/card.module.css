@@ -1,0 +1,232 @@
+.card {
+  --card-bg: #ffffff;
+  --card-accent: #FE8787;
+  --card-text: #1e293b;
+  --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+  width: 300px;
+  height: 430px;
+  background: var(--card-bg);
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--card-shadow);
+  border: 1px solid rgba(233, 226, 226, 0.979);
+  cursor: pointer;
+  z-index: 1000000;
+  /* Add margin to prevent clipping */
+  margin: 20px 10px 10px 10px;
+}
+
+.card__shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(255, 255, 255, 0.8) 50%,
+      rgba(255, 255, 255, 0) 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card__glow {
+  position: absolute;
+  inset: -10px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.card__content {
+  padding: 1.25em;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+  position: relative;
+  z-index: 2;
+}
+
+.card__badge {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: #FFADAD;
+  color: white;
+  padding: 0.25em 0.5em;
+  border-radius: 999px;
+  font-size: 0.7em;
+  font-weight: 600;
+  transform: scale(0.8);
+  opacity: 0;
+  transition: all 0.4s ease 0.1s;
+}
+
+.card__image {
+  width: 100%;
+  min-height: 280px;
+  border-radius: 12px;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  -webkit-transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  -moz-transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  -ms-transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  -o-transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: center;
+  object-fit: contain;
+}
+
+.card__image img {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  border-radius: 12px;
+}
+
+.card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+}
+
+.card__title {
+  color: var(--card-text);
+  font-size: 1em;
+  margin: 0;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 270px;
+}
+
+.card__description {
+  color: var(--card-text);
+  font-size: 0.95em;
+  margin: 0;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.card__price {
+  color: var(--card-text);
+  font-weight: 700;
+  font-size: 1.3em;
+  transition: all 0.3s ease;
+}
+
+.card__button {
+  width: 32px;
+  height: 32px;
+  background:white ;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--card-accent);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  transform: scale(0.9);
+  border: 1px solid var(--card-accent);
+}
+
+/* Container to prevent card clipping - Alternative solution */
+.card-container {
+  padding: 20px 10px 10px 10px;
+  display: inline-block;
+}
+
+/* Hover Effects */
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-color: rgba(237, 58, 198, 0.2);
+  z-index: 1000000;
+}
+
+.card:hover .card__shine {
+  opacity: 1;
+  animation: shine 3s infinite;
+}
+
+.card:hover .card__glow {
+  opacity: 1;
+}
+
+.card:hover .card__badge {
+  transform: scale(1);
+  opacity: 1;
+  z-index: 1;
+}
+
+.card:hover .card__image {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover .card__title {
+  color: var(--card-accent);
+  transform: translateX(2px);
+}
+
+.card:hover .card__description {
+  opacity: 1;
+  transform: translateX(2px);
+}
+
+.card:hover .card__price {
+  color: var(--card-accent);
+  transform: translateX(2px);
+}
+
+.card:hover .card__button {
+  transform: scale(1);
+  box-shadow: 0 0 0 4px rgba(240, 48, 137, 0.2);
+}
+
+.card:hover .card__button svg {
+  animation: pulse 1.5s infinite;
+}
+
+/* Active State */
+.card:active {
+  transform: translateY(-5px) scale(0.98);
+  z-index: 1000000;
+}
+
+/* Animations */
+@keyframes shine {
+  0% {
+    background-position: -100% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

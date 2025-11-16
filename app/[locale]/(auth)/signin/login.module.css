@@ -1,0 +1,148 @@
+.auth__sec {
+    border-radius: 20px;
+    height: 800px !important;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+    margin-top: 50px;
+    width: 60%;
+    margin: 50px auto;
+}
+
+.auth__body {
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+.auth__img {
+    height: 800px !important;
+    width: fit-content !important;
+    border-radius: 20px;
+}
+
+.auth__title {
+    color: var(--text-surface);
+    font-size: 50px;
+    text-align: center !important;
+    width: 500px;
+    margin: 50px auto;
+}
+
+.auth__para {
+    color: var(--text-surface);
+    text-align: center !important;
+    width: 500px;
+    margin: 10px auto;
+}
+
+.auth__para a {
+    color: var(--Primary);
+}
+
+.login__body {
+    margin-top: 50px;
+}
+
+.Login__container {
+    position: relative;
+    border-radius: 0.5rem;
+    width: 60%;
+    overflow: hidden;
+    margin: 20px auto;
+}
+
+.Login__container::before {
+    content: '';
+    position: absolute;
+    width: 3.5rem;
+    height: 3rem;
+    right: 0;
+    background-color: #fe8787d0;
+    /* Violet-500 */
+    border-radius: 50%;
+    filter: blur(0.5rem);
+}
+
+.Login__container::after {
+    content: '';
+    position: absolute;
+    z-index: -10;
+    width: 5.5rem;
+    height: 5rem;
+    right: 2.5rem;
+    top: 0.75rem;
+    background-color: #fe878791;
+    /* Rose-300 */
+    border-radius: 50%;
+    filter: blur(0.5rem);
+}
+
+.custom__input {
+    position: relative;
+    background-color: transparent;
+    border: 2px solid #eee;
+    /* Neutral-500 */
+    color: #272829;
+    /* Neutral-900 */
+    placeholder-color: #252427;
+    /* Violet-700 */
+    font-size: 0.875rem;
+    /* Text-sm */
+    border-radius: 0.5rem;
+    padding: 0.625rem;
+    /* p-2.5 */
+    width: 100%;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+    height: 50px;
+
+}
+
+.custom__input::placeholder {
+    color: #252427;
+    /* Violet-700 */
+    opacity: 0.6;
+    /* Placeholder-opacity-60 */
+}
+
+.custom__input:dir(rtl)::placeholder {
+    text-align: right;
+}
+
+.custom__input:focus {
+    border-color: #FE8787;
+    /* Violet-500 */
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.4);
+    /* Focus ring effect */
+}
+
+.custom__input:checked {
+    background-color: #10b981;
+    /* Emerald-500 */
+}
+
+.password__body {
+    position: relative;
+}
+
+.pass__body {
+    position: absolute;
+    top: 10px;
+    font-family: "Alexandria", serif !important;
+
+}
+
+.pass__body:dir(ltr) {
+    right: 170px;
+}
+
+.pass__body:dir(rtl) {
+    left: 170px;
+}
+
+.error__message {
+    text-align: center;
+    color: red;
+}

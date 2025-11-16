@@ -1,0 +1,200 @@
+.container {
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  background: #fafafa;
+}
+
+.wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #1a1a1a;
+}
+.cartContainer {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 2rem;
+  align-items: start;
+}
+.cartItems {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+
+.cartItem {
+  position: relative;
+  display: grid;
+  grid-template-columns: 80px 1fr auto auto auto;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid #f0f0f0;
+  transition: all 0.2s;
+}
+
+.cartItem:last-child {
+  border-bottom: none;
+}
+
+.cartItem:hover {
+  background: #fafafa;
+}
+
+.cartItem.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+
+.skeleton {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.skeletonImage {
+  width: 50px;
+  height: 80px;
+  background: #e0e0e0;
+  border-radius: 8px;
+}
+
+.skeletonContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.skeletonTitle {
+  width: 200px;
+  height: 20px;
+  background: #e0e0e0;
+  border-radius: 4px;
+}
+
+.skeletonText {
+  width: 150px;
+  height: 16px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  margin: 0.5rem 0;
+}
+
+.skeletonQty {
+  width: 100px;
+  height: 40px;
+  background: #e0e0e0;
+  border-radius: 8px;
+}
+
+.skeletonPrice {
+  width: 60px;
+  height: 24px;
+  background: #e0e0e0;
+  border-radius: 4px;
+}
+
+
+.empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.empty p {
+  font-size: 1.125rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+
+.continueShopping {
+  padding: 0.875rem 2rem;
+  background: #1a1a1a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.continueShopping:hover {
+  background: #000;
+}
+
+
+.updateCart {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #1a1a1a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.updateCart:hover:not(:disabled) {
+  background: #000;
+}
+
+.updateCart:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+
+
+
+
+
+
+
+/* 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

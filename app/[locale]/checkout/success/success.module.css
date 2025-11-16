@@ -1,0 +1,260 @@
+/* app/[locale]/checkout/success/success.module.css */
+
+.container {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.successCard {
+    background: white;
+    border-radius: 20px;
+    padding: 3rem 2rem;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animated Checkmark */
+.checkmarkWrapper {
+    margin: 0 auto 2rem;
+}
+
+.checkmark {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+}
+
+.checkmarkSvg {
+    width: 100%;
+    height: 100%;
+}
+
+.checkmarkCircle {
+    stroke: #4caf50;
+    stroke-width: 2;
+    stroke-miterlimit: 10;
+    animation: fillCircle 0.4s ease-in-out 0.4s forwards, scaleCircle 0.3s ease-in-out 0.9s both;
+}
+
+.checkmarkCheck {
+    stroke: #4caf50;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: drawCheck 0.5s ease-in-out 0.8s forwards;
+}
+
+@keyframes fillCircle {
+    100% {
+        stroke-dasharray: 166;
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes scaleCircle {
+    0%, 100% {
+        transform: none;
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes drawCheck {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Content */
+.title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2e7d32;
+    margin-bottom: 1rem;
+    animation: fadeIn 0.5s ease-in 0.3s both;
+}
+
+.message {
+    font-size: 1.125rem;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    animation: fadeIn 0.5s ease-in 0.5s both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Order Info */
+.orderInfo {
+    background: #f5f5f5;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    display: inline-block;
+    animation: fadeIn 0.5s ease-in 0.7s both;
+}
+
+.orderLabel {
+    font-size: 0.9rem;
+    color: #666;
+    margin-right: 0.5rem;
+}
+
+.orderId {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Actions */
+.actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    animation: fadeIn 0.5s ease-in 0.9s both;
+}
+
+@media (max-width: 600px) {
+    .actions {
+        flex-direction: column;
+    }
+}
+
+.primaryButton {
+    flex: 1;
+    background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+}
+
+.primaryButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+}
+
+.secondaryButton {
+    flex: 1;
+    background: white;
+    color: #333;
+    border: 2px solid #333;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.secondaryButton:hover {
+    background: #333;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Info Box */
+.infoBox {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: left;
+    animation: fadeIn 0.5s ease-in 1.1s both;
+}
+
+.infoTitle {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1565c0;
+    margin-bottom: 1rem;
+}
+
+.infoList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.infoList li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: #555;
+    line-height: 1.5;
+}
+
+.infoList li:last-child {
+    margin-bottom: 0;
+}
+
+.infoList li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #2e7d32;
+    font-weight: bold;
+}
+
+/* RTL Support */
+[dir="rtl"] .orderLabel {
+    margin-right: 0;
+    margin-left: 0.5rem;
+}
+
+[dir="rtl"] .infoList li {
+    padding-left: 0;
+    padding-right: 1.5rem;
+}
+
+[dir="rtl"] .infoList li::before {
+    left: auto;
+    right: 0;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .successCard {
+        padding: 2rem 1.5rem;
+    }
+    
+    .title {
+        font-size: 1.5rem;
+    }
+    
+    .message {
+        font-size: 1rem;
+    }
+}

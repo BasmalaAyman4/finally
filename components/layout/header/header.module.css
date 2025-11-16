@@ -1,0 +1,128 @@
+
+.header{
+    display: grid;
+    grid-template-columns: 140px 1fr calc(var(--w-image) * var(--calculate));
+    grid-template-rows: 70px;
+    position: relative;
+    border-bottom: 1px solid var(--border-color);
+    align-items: center;
+    z-index: 999;
+}
+
+.header .main__nav a{
+    color: #000 !important;
+    font-weight: 600 !important; 
+    text-decoration: none;
+}
+.header .main__nav ul{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 30px;
+}
+.main__nav .nav__item{
+  list-style: none;
+
+}
+html:lang(en) .header .main__nav ul{
+    padding-right: 30px;
+}
+html:lang(ar) .header .main__nav ul{
+    padding-left: 30px;
+}
+html:lang(en) .header .main__nav{
+    border-left: 1px solid var(--border-color);
+}
+html:lang(ar) .header .main__nav{
+    border-right: 1px solid var(--border-color);
+}
+.main__nav p{
+  margin-bottom: 0;
+  font-weight: 600 !important; 
+  cursor: pointer;
+}
+/********************/
+/*search*/
+.search {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 0 15px;
+  }
+  
+  .search__input {
+    font-family: inherit;
+    font-size: inherit;
+    background-color: #f4f2f293;
+    border: none;
+    color: #646464;
+    padding: 0.7rem 1rem;
+    border-radius: 30px;
+    width: 65%;
+    transition: all ease-in-out .5s;
+   
+  }
+  html:lang(en) .search__input {
+ margin-right: -2rem;
+  }
+   html:lang(ar) .search__input {
+ margin-left: -2rem;
+  }
+  .search__input:hover, .search__input:focus {
+    box-shadow: 0 0 1em #00000013;
+  }
+  
+  .search__input:focus {
+    outline: none;
+    background-color: #f0eeee;
+  }
+  
+  .search__input::-webkit-input-placeholder {
+    font-weight: 100;
+    color: #333;
+  }
+  
+  .search__input:focus + .search__button {
+    background-color: #f0eeee;
+  }
+  
+  .search__button {
+    border: none;
+    background-color: transparent;
+    margin-top: .1em;
+  }
+  
+  .search__button:hover {
+    cursor: pointer;
+  }
+  
+  .search__icon {
+    height: 1.3em;
+    width: 1.3em;
+    fill: #b4b4b4;
+  }
+
+
+  .logo__text{
+    font-size: 32px;
+    text-align: center;
+    color: #000;
+    margin: auto;
+
+  }
+    .para__priv{
+    font-size: 17px;
+    font-weight: 600;
+    text-align: right;
+  }
+  .priv__title{
+    text-align: center;
+    margin: 50px 0;
+    text-decoration: underline;
+  }
+  .sec__priv{
+    margin: 0px 100px;
+  }
+
+  

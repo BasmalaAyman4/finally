@@ -1,0 +1,68 @@
+.sliderWrapper {
+  width: 100%;
+  overflow: hidden;
+  margin: auto;
+}
+
+.sliderTrack {
+  display: flex;
+  width: fit-content;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  column-gap: 50px;
+  margin-bottom: 40px;
+}
+
+.scrollLeft {
+  animation-name: scrollLeft;
+  /* animation-duration is now set dynamically via inline style */
+  animation-direction: normal;
+}
+
+.scrollRight {
+  animation-name: scrollRight;
+  /* animation-duration is now set dynamically via inline style */
+  animation-direction: normal;
+}
+
+.paused {
+  animation-play-state: paused !important;
+}
+
+.product {
+  width: 200px;
+  height: 150px;
+  margin: 0 5px;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  border-radius: 8px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.product:hover {
+  transform: scale(1.02);
+}
+
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scrollRight {
+  0% {
+    transform: translateX(-50%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}

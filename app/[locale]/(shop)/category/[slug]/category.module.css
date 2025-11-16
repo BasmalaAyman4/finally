@@ -1,0 +1,53 @@
+/* app/[locale]/(shop)/category/[slug]/page.module.css */
+
+.container {
+
+  padding: 0 1rem;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 0rem;
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+}
+
+.main {
+  min-height: 500px;
+}
+
+.emptyState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  padding: 3rem;
+  background: #f9fafb;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.emptyState p {
+  font-size: 1.125rem;
+  color: #6b7280;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .content {
+    grid-template-columns: 240px 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .container {
+    padding: 0 0.75rem;
+  }
+}

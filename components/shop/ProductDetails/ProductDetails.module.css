@@ -1,0 +1,1454 @@
+/* Enhanced ProductDetails.module.css with all optimizations */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+    padding: 0;
+    list-style: none;
+}
+
+.separator {
+    color: #999;
+}
+
+.currentPage {
+    color: #333;
+    font-weight: 500;
+}
+
+.productContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    position: relative;
+}
+
+/* Image Section */
+.imageSection {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow: hidden;
+}
+
+.mainImageContainer {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f8f9fa;
+    cursor: zoom-in;
+}
+
+.imageWrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.mainImage {
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    width: 100%;
+}
+
+.mainImage:hover {
+    transform: scale(1.02);
+}
+
+
+
+ .imageSkeleton {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.thumbnailContainer {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 4px 0;
+    scrollbar-width: thin;
+    scrollbar-color: #ddd transparent;
+}
+
+.thumbnailContainer::-webkit-scrollbar {
+    height: 4px;
+}
+
+.thumbnailContainer::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.thumbnailContainer::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 2px;
+}
+
+.thumbnail {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    background: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.thumbnail:hover {
+    border-color: #ddd;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.thumbnailActive {
+    border-color: #000 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.thumbnailImage {
+    object-fit: contain;
+}
+
+/* Info Section */
+.infoSection {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.brandHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    font-weight: 600;
+    font-size: 16px;
+    color: #000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.shareButton {
+    background: none;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 6px;
+    cursor: pointer;
+    color: #666;
+    transition: all 0.2s ease;
+}
+
+.shareButton:hover {
+    border-color: #000;
+    color: #000;
+}
+
+.productId {
+    font-size: 14px;
+    color: #999;
+}
+
+.title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #000;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.ratingContainer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.stars {
+    display: flex;
+    gap: 2px;
+}
+
+.star {
+    transition: color 0.2s ease;
+}
+
+.starFilled {
+    color: #ffd700;
+}
+
+.starEmpty {
+    color: #e0e0e0;
+}
+
+.reviewCount {
+    font-size: 14px;
+    color: #666;
+}
+
+.priceContainer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 8px 0;
+}
+
+.currentPrice {
+    font-size: 32px;
+    font-weight: 700;
+    color: #000;
+}
+
+.originalPrice {
+    font-size: 24px;
+    color: #999;
+    text-decoration: line-through;
+}
+
+.optionGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 8px 0;
+}
+
+.optionLabel {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.selectedOption {
+    font-size: 14px;
+    color: #666;
+    font-weight: normal;
+}
+
+.sizeGuide {
+    font-size: 14px;
+    color: #666;
+    text-decoration: underline;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    font-weight: normal;
+}
+
+.sizeGuide:hover {
+    color: #000;
+}
+
+.colorOptions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.colorSwatch {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: none;
+    position: relative;
+}
+
+.colorSwatch::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 4px;
+    background: inherit;
+}
+
+.colorSwatch:hover:not(:disabled) {
+    transform: scale(1.1);
+    border-color: #999;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.colorSwatchActive {
+    border-color: #000 !important;
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.colorSwatch:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    position: relative;
+}
+
+.colorSwatch:disabled::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, transparent 45%, #ff0000 47%, #ff0000 53%, transparent 55%);
+    border-radius: 6px;
+    pointer-events: none;
+}
+
+.sizeOptions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.sizeButton {
+    padding: 12px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background: white;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 50px;
+    position: relative;
+}
+
+.sizeButton:hover:not(:disabled) {
+    border-color: #999;
+    background: #f8f9fa;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sizeButtonActive {
+    border-color: #000 !important;
+    background: #000 !important;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.sizeButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    text-decoration: line-through;
+    transform: none !important;
+}
+
+.actionContainer {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    flex-direction: column;
+}
+.actionButtons{
+    display: flex;
+    column-gap: 8px;
+    width: 100%;
+}
+.addToCartButton {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 24px;
+    background: #000;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.addToCartButton::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.addToCartButton:hover:not(:disabled)::before {
+    left: 100%;
+}
+
+.addToCartButton:hover:not(:disabled) {
+    background: #333;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.buttonDisabled {
+    background: #ccc !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.favoriteButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #666;
+}
+
+.favoriteButton:hover {
+    border-color: #ff6b6b;
+    color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.05);
+    transform: translateY(-1px);
+}
+
+.favoriteActive {
+    border-color: #ff6b6b !important;
+    color: #ff6b6b !important;
+    background: rgba(255, 107, 107, 0.1) !important;
+}
+
+.deliveryInfo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #666;
+    padding: 12px 16px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.features {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.feature {
+    padding: 6px 12px;
+    background: #e8f5e8;
+    color: #2d5a2d;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 16px;
+    border: 1px solid #c3e6c3;
+}
+
+.descriptionContainer,
+.ingredientsContainer {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 20px;
+    margin-top: 8px;
+}
+
+.descriptionTitle,
+.ingredientsTitle {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+    margin: 0 0 12px 0;
+}
+
+.description,
+.ingredients {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #666;
+    margin: 0;
+}
+
+.description p {
+    margin: 0 0 12px 0;
+}
+
+.description p:last-child {
+    margin-bottom: 0;
+}
+
+.description h1,
+.description h2,
+.description h3,
+.description h4,
+.description h5,
+.description h6 {
+    color: #000;
+    margin: 16px 0 8px 0;
+}
+
+.description h1:first-child,
+.description h2:first-child,
+.description h3:first-child {
+    margin-top: 0;
+}
+
+.description ul,
+.description ol {
+    padding-left: 20px;
+    margin: 12px 0;
+}
+
+.description li {
+    margin: 4px 0;
+}
+
+/* Image Modal */
+.imageModal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.imageModalContent {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    aspect-ratio: 1;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.closeModal {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.closeModal:hover {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.modalImage {
+    object-fit: contain;
+}
+
+.errorContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    background: white;
+    border-radius: 16px;
+    margin: 20px 0;
+}
+
+.errorText {
+    font-size: 18px;
+    color: #666;
+    text-align: center;
+}
+
+/* Loading States */
+.loadingButton {
+    position: relative;
+}
+
+.loadingButton::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    margin: auto;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .container {
+        padding: 16px;
+    }
+
+    .productContainer {
+        gap: 32px;
+        padding: 32px 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .productContainer {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 24px 20px;
+    }
+
+    .title {
+        font-size: 24px;
+    }
+
+    .currentPrice {
+        font-size: 28px;
+    }
+
+    .originalPrice {
+        font-size: 20px;
+    }
+
+    .thumbnailContainer {
+        justify-content: center;
+        padding-bottom: 8px;
+    }
+
+    .thumbnail {
+        width: 70px;
+        height: 70px;
+    }
+
+    .actionContainer {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .favoriteButton {
+        align-self: flex-start;
+        width: 100%;
+        height: 48px;
+    }
+
+    .brandHeader {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .headerActions {
+        order: -1;
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 12px;
+    }
+
+    .productContainer {
+        padding: 20px 16px;
+    }
+
+    .colorOptions,
+    .sizeOptions {
+        justify-content: center;
+    }
+
+    .breadcrumb {
+        font-size: 12px;
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .currentPrice {
+        font-size: 24px;
+    }
+
+    .originalPrice {
+        font-size: 18px;
+    }
+
+    .imageModalContent {
+        max-width: 95vw;
+        max-height: 80vh;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .colorSwatch {
+        border-width: 3px;
+    }
+
+    .sizeButton {
+        border-width: 3px;
+    }
+
+    .thumbnail {
+        border-width: 3px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    :global(*),
+    :global(*::before),
+    :global(*::after) {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .shimmer {
+        animation: none;
+        background: #e0e0e0;
+    }
+}
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .container {
+        background-color: #1a1a1a;
+        color: #ffffff;
+    }
+
+    .productContainer {
+        background: #2d2d2d;
+        color: #ffffff;
+    }
+
+    .title,
+    .brand,
+    .descriptionTitle,
+    .ingredientsTitle {
+        color: #ffffff;
+    }
+
+    .currentPrice {
+        color: #ffffff;
+    }
+
+    .addToCartButton {
+        background: #ffffff;
+        color: #000000;
+    }
+
+    .addToCartButton:hover:not(:disabled) {
+        background: #e0e0e0;
+    }
+}
+
+
+/* Add these styles to your ProductDetails.module.css file */
+
+/* Enhanced Zoom Modal Styles */
+
+
+
+
+
+
+
+.zoomModal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    cursor: zoom-out;
+    padding: 20px;
+}
+
+.zoomImage {
+    position: relative !important; 
+    max-width: 80vw;
+    max-height: 80vh;
+    object-fit: contain;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease-out;
+    user-select: none;
+    display: block;
+    width: fit-content !important;
+  
+}
+
+/* Close button for zoom modal */
+.zoomCloseButton {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1001;
+    transition: all 0.2s ease;
+}
+
+.zoomCloseButton:hover {
+    background: rgba(0, 0, 0, 1);
+    transform: scale(1.1);
+}
+
+/* Zoom controls */
+.zoomControls {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 25px;
+    padding: 8px 16px;
+    z-index: 1001;
+}
+
+.zoomButton {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.zoomButton:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.zoomLevel {
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    min-width: 50px;
+    text-align: center;
+}
+
+/* Navigation buttons in zoom modal */
+.zoomNavigationButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 1001;
+}
+
+.zoomNavigationButton:hover {
+    background: rgba(0, 0, 0, 0.9);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.zoomPrevButton {
+    left: 20px;
+}
+
+.zoomNextButton {
+    right: 20px;
+}
+
+/* Image counter in zoom modal */
+.imageCounter {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    z-index: 1001;
+}
+
+/* Loading indicator for zoom modal */
+.zoomLoadingIndicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1002;
+}
+
+.loadingSpinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Main image improvements */
+.mainImageContainer {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    cursor: zoom-in;
+}
+
+.mainImage {
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    width: 100%;
+    height: 100%;
+}
+
+.mainImage:hover {
+    transform: scale(1.02);
+}
+
+/* Zoom indicator */
+.zoomIndicator {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+
+.mainImageContainer:hover .zoomIndicator {
+    opacity: 1;
+}
+
+/* Navigation buttons */
+.navigationButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.2s ease;
+}
+
+.mainImageContainer:hover .navigationButton {
+    opacity: 1;
+}
+
+.navigationButton:hover {
+    background: rgba(0, 0, 0, 0.8);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.prevButton {
+    left: 12px;
+}
+
+.nextButton {
+    right: 12px;
+}
+
+/* Thumbnail styles */
+.thumbnailContainer {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 4px 0;
+    scrollbar-width: thin;
+    scrollbar-color: #ddd transparent;
+}
+
+.thumbnail {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    background: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.thumbnail:hover {
+    border-color: #ddd;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.thumbnail.active {
+    border-color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.thumbnailImage {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+}
+
+.moreImages {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 80px;
+    height: 80px;
+    background: #f0f0f0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+}
+
+/* No image fallback */
+.noImageIcon {
+    font-size: 48px;
+    margin-bottom: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .zoomImage {
+        max-width: 95vw;
+        max-height: 85vh;
+    }
+
+    .zoomControls {
+        top: 10px;
+        left: 10px;
+        padding: 6px 12px;
+    }
+
+    .zoomCloseButton {
+        top: 10px;
+        right: 10px;
+        width: 36px;
+        height: 36px;
+    }
+
+    .zoomNavigationButton {
+        width: 44px;
+        height: 44px;
+    }
+
+    .zoomPrevButton {
+        left: 15px;
+    }
+
+    .zoomNextButton {
+        right: 15px;
+    }
+}
+
+.spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Optional: Enhance button states */
+.addToCartButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.addToCartButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.buttonDisabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+
+/* Quantity Selector Styles */
+.quantitySelector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    background: #f8f9fa;
+    border-radius: 0.5rem;
+}
+
+.quantityLabel {
+    font-size: 0.875rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.quantityControls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    padding: 0.25rem;
+    background: white;
+}
+
+.quantityButton {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: white;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    color: #374151;
+    transition: all 0.2s ease;
+}
+
+.quantityButton:hover:not(:disabled) {
+    background: #f3f4f6;
+}
+
+.quantityButton:disabled {
+    background: #f3f4f6;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+.quantityValue {
+    min-width: 40px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.quantityAvailable {
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+/* Status Messages */
+.statusMessage {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.successMessage {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #6ee7b7;
+}
+
+.errorMessage {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+.statusMessageText {
+    font-weight: 600;
+}
+
+.statusMessageDetails {
+    font-size: 0.75rem;
+    opacity: 0.8;
+    margin-top: 0.25rem;
+}
+
+/* Brand Logo */
+.brandLogo {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Discount Badge */
+.discountBadge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    background: #ef4444;
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 0.375rem;
+}
+
+/* Out of Stock Indicator */
+.outOfStockIndicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.25rem;
+    color: #ef4444;
+}
+
+.sizeButton {
+    position: relative;
+}
+
+.sizeButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    text-decoration: line-through;
+}
+
+/* Price Section Enhancement */
+.priceSection {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 12px 0;
+    flex-wrap: wrap;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    .quantityButton,
+    .statusMessage {
+        transition: none;
+    }
+}
+
+/* RTL Support */
+[dir="rtl"] .quantitySelector,
+[dir="rtl"] .statusMessage {
+    direction: rtl;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .quantitySelector {
+        background: #374151;
+    }
+
+    .quantityControls {
+        border-color: #4b5563;
+        background: #1f2937;
+    }
+
+    .quantityButton {
+        background: #1f2937;
+        color: #e5e7eb;
+    }
+
+    .quantityButton:hover:not(:disabled) {
+        background: #374151;
+    }
+
+    .quantityButton:disabled {
+        background: #374151;
+        color: #6b7280;
+    }
+
+    .quantityLabel,
+    .quantityAvailable {
+        color: #9ca3af;
+    }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .quantitySelector {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: stretch;
+    }
+
+    .quantityControls {
+        justify-content: center;
+    }
+}
+
+/* Focus visible for accessibility */
+.quantityButton:focus-visible,
+.sizeButton:focus-visible,
+.colorSwatch:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* Loading state for buttons */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.loading {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.btn{
+    gap: 8px;
+}
+
+/* Collapsible Container */
+.collapsibleContainer {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 15px;
+}
+
+.collapsibleHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 0.75rem 0;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.collapsibleHeader:hover {
+    opacity: 0.7;
+}
+
+.collapsibleHeader .descriptionTitle {
+    margin: 0;
+}
+
+.collapsibleContent {
+    padding-bottom: 1rem;
+}

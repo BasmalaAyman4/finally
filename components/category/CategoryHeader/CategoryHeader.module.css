@@ -1,0 +1,62 @@
+/* components/category/CategoryHeader.module.css */
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 3rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f3f4f6;
+  flex-shrink: 0;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.content {
+  flex: 1;
+}
+
+.title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.2;
+}
+
+.count {
+  font-size: 1rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header {
+    padding: 2rem 0;
+    gap: 1.5rem;
+  }
+  
+  .imageWrapper {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .title {
+    font-size: 1.75rem;
+  }
+  
+  .count {
+    font-size: 0.875rem;
+  }
+}

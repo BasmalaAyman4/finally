@@ -1,0 +1,140 @@
+/* components/category/FilterSidebar.module.css */
+
+.sidebar {
+  position: sticky;
+  top: 2rem;
+  height: fit-content;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.clearBtn {
+  background: none;
+  border: none;
+  color: #ef4444;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.clearBtn:hover {
+  background-color: #fee2e2;
+}
+
+.filterGroup {
+  margin-bottom: 2rem;
+}
+
+.filterGroup:last-child {
+  margin-bottom: 0;
+}
+
+.filterTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 1rem 0;
+}
+
+.filterList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filterItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  width: 100%;
+}
+
+.filterItem:hover {
+  border-color: #d1d5db;
+  background: #f9fafb;
+}
+
+.filterItem.active {
+  background: #eff6ff;
+  border-color: #3b82f6;
+}
+
+.filterImage {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f3f4f6;
+  flex-shrink: 0;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.filterName {
+  font-size: 0.9375rem;
+  color: #374151;
+  font-weight: 500;
+  flex: 1;
+}
+
+.filterItem.active .filterName {
+  color: #1e40af;
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar {
+    position: static;
+    padding: 1rem;
+  }
+  
+  .filterList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .filterItem {
+    flex-direction: column;
+    text-align: center;
+    padding: 0.75rem 0.5rem;
+  }
+  
+  .filterName {
+    font-size: 0.75rem;
+  }
+}

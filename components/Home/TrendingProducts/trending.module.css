@@ -1,0 +1,66 @@
+.trend__sec {
+    position: relative;
+    padding: 75px 25px;
+}
+
+
+.trend__body {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.trend__body h2 {
+    font-size: 40px;
+    color: var(--Primary);
+}
+
+.active {
+    border: none;
+    width: 180px;
+    color: #FE8787;
+}
+
+.option {
+    padding: 10px 15px;
+    background-color: transparent;
+    border: none !important;
+    width: 180px;
+}
+
+.active,
+.option {
+    font-size: 17px;
+    font-weight: 500;
+    cursor: pointer;
+
+}
+
+.trend__options {
+    position: relative;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    column-gap: 35px;
+    cursor: pointer;
+    margin: 30px 0;
+}
+
+.trend__options button {
+    position: relative;
+    background: transparent !important;
+    transition: color 0.2s ease;
+}
+
+.activeIndicator {
+    border-radius: inherit;
+}
+.cards__body{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    justify-items: center;
+    gap: 20px;
+
+}
