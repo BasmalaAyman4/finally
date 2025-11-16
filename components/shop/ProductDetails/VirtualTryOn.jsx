@@ -633,7 +633,7 @@ import { Camera } from "lucide-react";
  */
 export const VirtualLipstickTryOn = ({
   colorHex = "#DC143C",
-  opacity = 0.6,
+  opacity = 0.3,
   isActive = false,
   onClose,
 }) => {
