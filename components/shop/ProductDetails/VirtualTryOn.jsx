@@ -642,7 +642,7 @@ export const VirtualLipstickTryOn = ({
   const [error, setError] = useState(null);
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [currentColor, setCurrentColor] = useState(colorHex);
-  const [localOpacity, setLocalOpacity] = useState(opacity);
+  const [localOpacity, setLocalOpacity] = useState(0.3);
   const [faceDetected, setFaceDetected] = useState(false);
 
   // References to DOM elements and MediaPipe objects
@@ -651,7 +651,7 @@ export const VirtualLipstickTryOn = ({
   const streamRef = useRef(null);
   const faceMeshRef = useRef(null);
   const animationFrameRef = useRef(null);
-  const opacityRef = useRef(opacity); // Store opacity in ref for real-time updates
+  const opacityRef = useRef(0.3); // Store opacity in ref for real-time updates
 
   // Lip landmark indices for MediaPipe Face Mesh
   const UPPER_LIP_OUTER = [61, 185, 40, 39, 37, 0, 267, 269, 270, 409, 291];
