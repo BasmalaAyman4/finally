@@ -1144,7 +1144,7 @@ export const VirtualLipstickTryOn = ({
         )}
       </div>
 
-      {/* Opacity Slider */}
+      {/* Opacity Slider 
       {isCameraActive && !isLoading && (
         <div
           style={{
@@ -1199,7 +1199,7 @@ export const VirtualLipstickTryOn = ({
           </span>
         </div>
       )}
-
+*/}
       {/* Color Indicator */}
       <div
         style={{
