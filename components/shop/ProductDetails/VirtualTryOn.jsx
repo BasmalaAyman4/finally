@@ -24,46 +24,45 @@ export const VirtualLipstickTryOn = ({
   const [error, setError] = useState(null);
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [currentColor, setCurrentColor] = useState(colorHex);
+  const [localOpacity, setLocalOpacity] = useState(opacity);
+  const [faceDetected, setFaceDetected] = useState(false);
 
   // References to DOM elements and MediaPipe objects
-  const videoRef = useRef(null); // Hidden video element that captures camera
-  const canvasRef = useRef(null); // Canvas where we draw the lipstick
-  const streamRef = useRef(null); // Camera stream reference
-  const faceMeshRef = useRef(null); // MediaPipe Face Mesh instance
-  const animationFrameRef = useRef(null); // Animation frame ID for cleanup
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+  const streamRef = useRef(null);
+  const faceMeshRef = useRef(null);
+  const animationFrameRef = useRef(null);
 
-  // Lip landmark indices - these are specific points that define the lip shape in MediaPipe
-  // MediaPipe provides 478 facial landmarks, these are the ones for lips
+  // Lip landmark indices for MediaPipe Face Mesh
   const UPPER_LIP_OUTER = [61, 185, 40, 39, 37, 0, 267, 269, 270, 409, 291];
   const LOWER_LIP_OUTER = [146, 91, 181, 84, 17, 314, 405, 321, 375, 291];
   const UPPER_LIP_INNER = [78, 191, 80, 81, 82, 13, 312, 311, 310, 415, 308];
   const LOWER_LIP_INNER = [78, 95, 88, 178, 87, 14, 317, 402, 318, 324, 308];
 
   /**
-   * FUNCTION 1: Start the camera
-   * This requests permission to use the camera and starts the video stream
+   * FUNCTION 1: Start the camera with optimized settings
    */
   const startCamera = useCallback(async () => {
     try {
       setError(null);
       setIsLoading(true);
 
-      // Ask browser for camera access
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
           width: { ideal: 1280 },
           height: { ideal: 720 },
-          facingMode: "user", // Front camera on mobile
+          facingMode: "user",
+          aspectRatio: { ideal: 1.777 },
+          frameRate: { ideal: 30 },
         },
-        audio: false, // We don't need audio
+        audio: false,
       });
 
       if (videoRef.current) {
-        // Connect camera stream to video element
         videoRef.current.srcObject = stream;
         streamRef.current = stream;
 
-        // Wait for video to be ready before proceeding
         await new Promise((resolve) => {
           videoRef.current.onloadedmetadata = () => {
             videoRef.current.play();
@@ -72,7 +71,6 @@ export const VirtualLipstickTryOn = ({
         });
 
         setIsCameraActive(true);
-        // Once camera is ready, initialize face detection
         await initializeFaceMesh();
       }
     } catch (err) {
@@ -83,41 +81,33 @@ export const VirtualLipstickTryOn = ({
   }, []);
 
   /**
-   * FUNCTION 2: Initialize MediaPipe Face Mesh
-   * This loads the AI model that detects faces and lip landmarks
+   * FUNCTION 2: Initialize MediaPipe with improved settings
    */
   const initializeFaceMesh = useCallback(async () => {
     try {
-      // Import MediaPipe libraries (they load on-demand)
       const { FaceMesh } = await import("@mediapipe/face_mesh");
       const { Camera } = await import("@mediapipe/camera_utils");
 
-      // Create Face Mesh instance
       const faceMesh = new FaceMesh({
         locateFile: (file) => {
-          // Load model files from CDN
           return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
         },
       });
 
-      // Configure Face Mesh settings
+      // Improved settings for better detection in various lighting
       faceMesh.setOptions({
-        maxNumFaces: 1, // Only detect one face (better performance)
-        refineLandmarks: true, // More accurate lip detection
-        minDetectionConfidence: 0.5, // How confident the model should be
-        minTrackingConfidence: 0.5, // How well to track across frames
+        maxNumFaces: 1,
+        refineLandmarks: true,
+        minDetectionConfidence: 0.7,
+        minTrackingConfidence: 0.7,
       });
 
-      // Tell Face Mesh what to do when it detects a face
       faceMesh.onResults(onFaceMeshResults);
-
       faceMeshRef.current = faceMesh;
 
-      // Start processing video frames
       if (videoRef.current) {
         const camera = new Camera(videoRef.current, {
           onFrame: async () => {
-            // Send each video frame to Face Mesh for processing
             if (faceMeshRef.current && videoRef.current) {
               await faceMeshRef.current.send({ image: videoRef.current });
             }
@@ -137,8 +127,7 @@ export const VirtualLipstickTryOn = ({
   }, []);
 
   /**
-   * FUNCTION 3: Process Face Mesh results
-   * This is called every frame when Face Mesh detects landmarks
+   * FUNCTION 3: Process Face Mesh results with brightness enhancement
    */
   const onFaceMeshResults = useCallback(
     (results) => {
@@ -149,178 +138,219 @@ export const VirtualLipstickTryOn = ({
 
       const ctx = canvas.getContext("2d");
 
-      // Make canvas match video dimensions
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
 
-      // Clear previous frame
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw the video frame (mirrored like a selfie)
+      // Enhanced brightness and contrast
+      ctx.filter = "brightness(1.1) contrast(1.05)";
+
+      // Draw mirrored video
       ctx.save();
-      ctx.scale(-1, 1); // Flip horizontally
+      ctx.scale(-1, 1);
       ctx.translate(-canvas.width, 0);
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
       ctx.restore();
 
-      // If a face is detected, draw the lipstick
+      ctx.filter = "none";
+
+      // Draw lipstick if face detected
       if (results.multiFaceLandmarks && results.multiFaceLandmarks.length > 0) {
-        const landmarks = results.multiFaceLandmarks[0]; // Get first face
-        drawLipstick(ctx, landmarks, canvas.width, canvas.height);
+        setFaceDetected(true);
+        const landmarks = results.multiFaceLandmarks[0];
+        drawLipstick(ctx, landmarks, canvas.width, canvas.height, localOpacity);
+      } else {
+        setFaceDetected(false);
       }
     },
-    [currentColor, opacity]
+    [currentColor, localOpacity]
   );
 
   /**
-   * FUNCTION 4: Draw the lipstick overlay
-   * This draws a colored polygon over the detected lips
+   * FUNCTION 4: Draw lipstick with smooth curves and realistic effects
    */
-  const drawLipstick = (ctx, landmarks, width, height) => {
-    // Helper function: Convert normalized coordinates (0-1) to pixel coordinates
+  const drawLipstick = (ctx, landmarks, width, height, opacityValue) => {
     const getLandmark = (index) => {
       const landmark = landmarks[index];
       return {
-        x: width - landmark.x * width, // Mirror x for selfie effect
+        x: width - landmark.x * width,
         y: landmark.y * height,
       };
     };
 
-    // Ensure color is in proper format
     const color = currentColor.startsWith("#")
       ? currentColor
       : `#${currentColor}`;
 
+    // Better color blending
+    ctx.globalCompositeOperation = "multiply";
     ctx.fillStyle = color;
-    ctx.globalAlpha = opacity;
+    ctx.globalAlpha = opacityValue;
+    ctx.filter = "blur(1px)";
 
-    // DRAW UPPER LIP
-    ctx.beginPath();
-    UPPER_LIP_OUTER.forEach((index, i) => {
-      const point = getLandmark(index);
-      if (i === 0) {
-        ctx.moveTo(point.x, point.y); // Start point
-      } else {
-        ctx.lineTo(point.x, point.y); // Draw line to next point
+    // Helper for smooth curves
+    const drawSmoothCurve = (points) => {
+      if (points.length < 2) return;
+
+      ctx.beginPath();
+      const firstPoint = getLandmark(points[0]);
+      ctx.moveTo(firstPoint.x, firstPoint.y);
+
+      for (let i = 1; i < points.length - 1; i++) {
+        const current = getLandmark(points[i]);
+        const next = getLandmark(points[i + 1]);
+        const xMid = (current.x + next.x) / 2;
+        const yMid = (current.y + next.y) / 2;
+        ctx.quadraticCurveTo(current.x, current.y, xMid, yMid);
       }
-    });
 
-    // Connect inner lip points in reverse to close the shape
-    UPPER_LIP_INNER.slice()
-      .reverse()
-      .forEach((index) => {
-        const point = getLandmark(index);
-        ctx.lineTo(point.x, point.y);
-      });
+      const lastPoint = getLandmark(points[points.length - 1]);
+      ctx.lineTo(lastPoint.x, lastPoint.y);
+    };
 
-    ctx.closePath();
-    ctx.fill(); // Fill the polygon with color
-
-    // DRAW LOWER LIP (same process)
-    ctx.beginPath();
-    LOWER_LIP_OUTER.forEach((index, i) => {
-      const point = getLandmark(index);
+    // Draw upper lip
+    drawSmoothCurve(UPPER_LIP_OUTER);
+    const upperInnerReversed = [...UPPER_LIP_INNER].reverse();
+    for (let i = 0; i < upperInnerReversed.length; i++) {
+      const point = getLandmark(upperInnerReversed[i]);
       if (i === 0) {
-        ctx.moveTo(point.x, point.y);
+        ctx.lineTo(point.x, point.y);
       } else {
-        ctx.lineTo(point.x, point.y);
+        const next = getLandmark(
+          upperInnerReversed[Math.min(i + 1, upperInnerReversed.length - 1)]
+        );
+        const xMid = (point.x + next.x) / 2;
+        const yMid = (point.y + next.y) / 2;
+        ctx.quadraticCurveTo(point.x, point.y, xMid, yMid);
       }
-    });
-
-    LOWER_LIP_INNER.slice()
-      .reverse()
-      .forEach((index) => {
-        const point = getLandmark(index);
-        ctx.lineTo(point.x, point.y);
-      });
-
+    }
     ctx.closePath();
     ctx.fill();
 
-    // ADD GLOSSY EFFECT (optional, makes it look more realistic)
-    ctx.globalAlpha = opacity * 0.3;
-    ctx.fillStyle = "white";
+    // Draw lower lip
+    drawSmoothCurve(LOWER_LIP_OUTER);
+    const lowerInnerReversed = [...LOWER_LIP_INNER].reverse();
+    for (let i = 0; i < lowerInnerReversed.length; i++) {
+      const point = getLandmark(lowerInnerReversed[i]);
+      if (i === 0) {
+        ctx.lineTo(point.x, point.y);
+      } else {
+        const next = getLandmark(
+          lowerInnerReversed[Math.min(i + 1, lowerInnerReversed.length - 1)]
+        );
+        const xMid = (point.x + next.x) / 2;
+        const yMid = (point.y + next.y) / 2;
+        ctx.quadraticCurveTo(point.x, point.y, xMid, yMid);
+      }
+    }
+    ctx.closePath();
+    ctx.fill();
 
-    const upperMid = getLandmark(0); // Middle of upper lip
+    ctx.filter = "none";
+
+    // Glossy effect
+    ctx.globalCompositeOperation = "screen";
+    ctx.globalAlpha = opacityValue * 0.4;
+
+    // Upper lip highlight
+    const upperMid = getLandmark(0);
     const gradient = ctx.createRadialGradient(
       upperMid.x,
-      upperMid.y - 5,
-      5,
+      upperMid.y - 3,
+      2,
       upperMid.x,
-      upperMid.y - 5,
-      20
+      upperMid.y - 3,
+      25
     );
-    gradient.addColorStop(0, "rgba(255, 255, 255, 0.8)");
+    gradient.addColorStop(0, "rgba(255, 255, 255, 0.9)");
+    gradient.addColorStop(0.5, "rgba(255, 255, 255, 0.3)");
     gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
 
     ctx.fillStyle = gradient;
     ctx.beginPath();
-    ctx.arc(upperMid.x, upperMid.y - 5, 15, 0, Math.PI * 2);
+    ctx.arc(upperMid.x, upperMid.y - 3, 20, 0, Math.PI * 2);
     ctx.fill();
 
-    ctx.globalAlpha = 1; // Reset transparency
+    // Lower lip highlight
+    const lowerMid = getLandmark(17);
+    const lowerGradient = ctx.createRadialGradient(
+      lowerMid.x,
+      lowerMid.y + 2,
+      2,
+      lowerMid.x,
+      lowerMid.y + 2,
+      15
+    );
+    lowerGradient.addColorStop(0, "rgba(255, 255, 255, 0.5)");
+    lowerGradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+
+    ctx.fillStyle = lowerGradient;
+    ctx.beginPath();
+    ctx.arc(lowerMid.x, lowerMid.y + 2, 12, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.globalCompositeOperation = "source-over";
+    ctx.globalAlpha = 1;
   };
 
   /**
    * FUNCTION 5: Stop camera and cleanup
-   * Important for releasing camera access when done
    */
   const stopCamera = useCallback(() => {
-    // Stop all camera tracks
     if (streamRef.current) {
       streamRef.current.getTracks().forEach((track) => track.stop());
       streamRef.current = null;
     }
 
-    // Close Face Mesh
     if (faceMeshRef.current) {
       faceMeshRef.current.close();
       faceMeshRef.current = null;
     }
 
-    // Cancel any pending animation frames
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);
       animationFrameRef.current = null;
     }
 
     setIsCameraActive(false);
+    setFaceDetected(false);
   }, []);
 
   /**
-   * EFFECT 1: Update color when prop changes
-   * This allows changing the lipstick color in real-time
+   * Update color when prop changes
    */
   useEffect(() => {
     setCurrentColor(colorHex);
   }, [colorHex]);
 
   /**
-   * EFFECT 2: Start/stop camera when modal opens/closes
+   * Update opacity when prop changes
+   */
+  useEffect(() => {
+    setLocalOpacity(opacity);
+  }, [opacity]);
+
+  /**
+   * Start/stop camera with modal
    */
   useEffect(() => {
     if (isActive) {
       startCamera();
     }
 
-    // Cleanup when component unmounts or modal closes
     return () => {
       stopCamera();
     };
   }, [isActive, startCamera, stopCamera]);
 
-  /**
-   * Handle close button click
-   */
   const handleClose = () => {
     stopCamera();
     onClose?.();
   };
 
-  // Don't render anything if not active
   if (!isActive) return null;
 
-  // RENDER THE UI
   return (
     <div
       style={{
@@ -337,7 +367,7 @@ export const VirtualLipstickTryOn = ({
         justifyContent: "center",
       }}
     >
-      {/* Header with title and close button */}
+      {/* Header */}
       <div
         style={{
           position: "absolute",
@@ -390,7 +420,7 @@ export const VirtualLipstickTryOn = ({
         </button>
       </div>
 
-      {/* Camera view container */}
+      {/* Camera Container */}
       <div
         style={{
           position: "relative",
@@ -403,10 +433,8 @@ export const VirtualLipstickTryOn = ({
           boxShadow: "0 10px 40px rgba(0, 0, 0, 0.5)",
         }}
       >
-        {/* Hidden video element (shows camera feed) */}
         <video ref={videoRef} style={{ display: "none" }} playsInline muted />
 
-        {/* Canvas where we draw everything */}
         <canvas
           ref={canvasRef}
           style={{
@@ -416,7 +444,7 @@ export const VirtualLipstickTryOn = ({
           }}
         />
 
-        {/* Loading indicator */}
+        {/* Loading */}
         {isLoading && (
           <div
             style={{
@@ -435,7 +463,7 @@ export const VirtualLipstickTryOn = ({
           </div>
         )}
 
-        {/* Error message */}
+        {/* Error */}
         {error && (
           <div
             style={{
@@ -466,9 +494,90 @@ export const VirtualLipstickTryOn = ({
             </button>
           </div>
         )}
+
+        {/* Lighting Tip */}
+        {isCameraActive && !isLoading && !faceDetected && (
+          <div
+            style={{
+              position: "absolute",
+              top: "20px",
+              left: "50%",
+              transform: "translateX(-50%)",
+              background: "rgba(0, 0, 0, 0.7)",
+              color: "white",
+              padding: "12px 20px",
+              borderRadius: "20px",
+              fontSize: "14px",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              backdropFilter: "blur(10px)",
+              zIndex: 5,
+            }}
+          >
+            <span style={{ fontSize: "16px" }}>💡</span>
+            <span>Face the camera directly with good lighting</span>
+          </div>
+        )}
       </div>
 
-      {/* Color indicator at bottom */}
+      {/* Opacity Slider */}
+      {isCameraActive && !isLoading && (
+        <div
+          style={{
+            position: "absolute",
+            bottom: "120px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            display: "flex",
+            alignItems: "center",
+            gap: "16px",
+            background: "rgba(255, 255, 255, 0.95)",
+            padding: "16px 24px",
+            borderRadius: "24px",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+            width: "90%",
+            maxWidth: "300px",
+          }}
+        >
+          <span
+            style={{
+              fontSize: "14px",
+              fontWeight: "600",
+              color: "#333",
+              minWidth: "60px",
+            }}
+          >
+            Intensity
+          </span>
+          <input
+            type="range"
+            min="30"
+            max="85"
+            value={localOpacity * 100}
+            onChange={(e) => setLocalOpacity(e.target.value / 100)}
+            style={{
+              flex: 1,
+              height: "6px",
+              borderRadius: "3px",
+              outline: "none",
+              cursor: "pointer",
+            }}
+          />
+          <span
+            style={{
+              fontSize: "14px",
+              fontWeight: "600",
+              color: "#666",
+              minWidth: "35px",
+            }}
+          >
+            {Math.round(localOpacity * 100)}%
+          </span>
+        </div>
+      )}
+
+      {/* Color Indicator */}
       <div
         style={{
           position: "absolute",
