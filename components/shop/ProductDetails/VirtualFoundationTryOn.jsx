@@ -696,7 +696,7 @@ export const VirtualFoundationTryOn = ({
             transition: "opacity 0.2s",
           }}
         >
-          BEFORE
+          AFTER
         </div>
         <div
           style={{
@@ -714,7 +714,7 @@ export const VirtualFoundationTryOn = ({
             transition: "opacity 0.2s",
           }}
         >
-          AFTER
+          BEFORE
         </div>
 
         {isLoading && (
