@@ -131,7 +131,8 @@ const ProductDetailsClient = memo(({ product, locale }) => {
             maxQuantity={selectedSize?.qty || 0}
             selectedColorId={selectedColor?.colorId}
             selectedSizeId={selectedSize?.sizeId}
-            selectedSize={selectedColor}
+            selectedSize={selectedSize}
+            selectedColor={selectedColor}
             locale={locale}
           />
         </div>

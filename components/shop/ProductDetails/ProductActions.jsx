@@ -2,19 +2,12 @@
 
 import { memo, useState, useEffect, useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import {
-  Heart,
-  ShoppingCart,
-  Plus,
-  Minus,
-  CheckCircle2,
-  AlertCircle,
-  Camera,
-} from "lucide-react";
+import { Heart, ShoppingCart, Plus, Minus,Camera, CheckCircle2, AlertCircle } from 'lucide-react';
 import { useCart } from '@/hooks/useCart';
 import Button from '@/components/ui/common/Button/Button';
 import styles from './ProductDetails.module.css';
 import { VirtualLipstickTryOn } from './VirtualTryOn';
+import { VirtualFoundationTryOn } from './VirtualFoundationTryOn';
 
 const QuantitySelector = memo(({ 
     quantity, 
@@ -87,8 +80,7 @@ const StatusMessage = memo(({ type, message, details, locale }) => {
 
 StatusMessage.displayName = 'StatusMessage';
 
-export const ProductActions = memo(
-  ({
+export const ProductActions = memo(({
     inStock,
     isFavorite,
     product,
@@ -97,106 +89,101 @@ export const ProductActions = memo(
     selectedColorId,
     selectedSizeId,
     selectedSize,
-    locale = "ar",
-  }) => {
-        const [showVirtualTryOn, setShowVirtualTryOn] = useState(false);
+    locale = 'ar',
+    selectedColor
+}) => {
+            const [showVirtualTryOn, setShowVirtualTryOn] = useState(false);
+const [showFoundationTryOn, setShowFoundationTryOn] = useState(false);
 
     const [quantity, setQuantity] = useState(1);
     const [showSuccess, setShowSuccess] = useState(false);
-
-    const {
-      addToCart,
-      isLoading,
-      error,
-      clearError,
-      isAuthenticated,
-      redirectToLogin,
-      errorDetails,
+    
+    const { 
+        addToCart, 
+        isLoading, 
+        error, 
+        clearError, 
+        isAuthenticated,
+        redirectToLogin,
+        errorDetails
     } = useCart(locale);
 
     // Reset quantity when selection changes
     useEffect(() => {
-      setQuantity(1);
-      clearError();
-      setShowSuccess(false);
+        setQuantity(1);
+        clearError();
+        setShowSuccess(false);
     }, [selectedColorId, selectedSizeId, maxQuantity, clearError]);
 
     // Auto-hide success message
     useEffect(() => {
-      if (showSuccess) {
-        const timer = setTimeout(() => setShowSuccess(false), 3000);
-        return () => clearTimeout(timer);
-      }
+        if (showSuccess) {
+            const timer = setTimeout(() => setShowSuccess(false), 3000);
+            return () => clearTimeout(timer);
+        }
     }, [showSuccess]);
 
     const handleIncrement = useCallback(() => {
-      if (quantity < maxQuantity) {
-        setQuantity((prev) => prev + 1);
-      }
+        if (quantity < maxQuantity) {
+            setQuantity(prev => prev + 1);
+        }
     }, [quantity, maxQuantity]);
 
     const handleDecrement = useCallback(() => {
-      if (quantity > 1) {
-        setQuantity((prev) => prev - 1);
-      }
+        if (quantity > 1) {
+            setQuantity(prev => prev - 1);
+        }
     }, [quantity]);
 
     const handleAddToCart = useCallback(async () => {
-      clearError();
-      setShowSuccess(false);
+        clearError();
+        setShowSuccess(false);
 
-      if (!isAuthenticated) {
-        redirectToLogin();
-        return;
-      }
+        if (!isAuthenticated) {
+            redirectToLogin();
+            return;
+        }
 
-      if (!selectedSize?.detailId) {
-        console.error("No detailId available");
-        return;
-      }
+        if (!selectedSize?.detailId) {
+            console.error('No detailId available');
+            return;
+        }
 
-      const result = await addToCart(selectedSize.detailId, quantity);
+        const result = await addToCart(selectedSize.detailId, quantity);
 
-      if (result.success) {
-        setShowSuccess(true);
-      }
-    }, [
-      isAuthenticated,
-      selectedSize,
-      quantity,
-      addToCart,
-      clearError,
-      redirectToLogin,
-    ]);
+        if (result.success) {
+            setShowSuccess(true);
+        }
+    }, [isAuthenticated, selectedSize, quantity, addToCart, clearError, redirectToLogin]);
 
     // Determine button state
     const getButtonState = () => {
-      if (!isAuthenticated) {
+        if (!isAuthenticated) {
+            return {
+                text: locale === 'ar' ? 'يجب تسجيل الدخول' : 'Login Required',
+                disabled: false
+            };
+        }
+        if (!selectedSize?.detailId) {
+            return {
+                text: locale === 'ar' ? 'اختر المقاس' : 'Select Size',
+                disabled: true
+            };
+        }
+        if (!inStock) {
+            return {
+                text: locale === 'ar' ? 'غير متوفر' : 'Out of Stock',
+                disabled: true
+            };
+        }
         return {
-          text: locale === "ar" ? "يجب تسجيل الدخول" : "Login Required",
-          disabled: false,
+            text: locale === 'ar' ? 'أضف إلى السلة' : 'Add to Cart',
+            disabled: false
         };
-      }
-      if (!selectedSize?.detailId) {
-        return {
-          text: locale === "ar" ? "اختر المقاس" : "Select Size",
-          disabled: true,
-        };
-      }
-      if (!inStock) {
-        return {
-          text: locale === "ar" ? "غير متوفر" : "Out of Stock",
-          disabled: true,
-        };
-      }
-      return {
-        text: locale === "ar" ? "أضف إلى السلة" : "Add to Cart",
-        disabled: false,
-      };
     };
 
     const buttonState = getButtonState();
-console.log(selectedSize);
+
     return (
       <div className={styles.actionContainer}>
         {/* Quantity Selector */}
@@ -211,38 +198,6 @@ console.log(selectedSize);
         )}
 
         {/* Action Buttons */}
-        {/*    <div className={styles.actionButtons}>
-          <Button
-            variant="primary"
-            fullWidth={true}
-            disabled={buttonState.disabled || isLoading}
-            loading={isLoading}
-            icon={<ShoppingCart size={20} />}
-            onClick={handleAddToCart}
-            className={styles.btn}
-          >
-            {buttonState.text}
-          </Button>
-
-          <Button
-            variant="outline"
-            icon={
-              <Heart size={25} fill={isFavorite ? "currentColor" : "none"} />
-            }
-            onClick={onToggleFavorite}
-            className={isFavorite ? styles.favoriteActive : ""}
-            aria-label={
-              isFavorite
-                ? locale === "ar"
-                  ? "إزالة من المفضلة"
-                  : "Remove from favorites"
-                : locale === "ar"
-                ? "أضف إلى المفضلة"
-                : "Add to favorites"
-            }
-          />
-        </div> */}
-        {/* Action Buttons */}
         <div className={styles.actionButtons}>
           <Button
             variant="primary"
@@ -255,9 +210,7 @@ console.log(selectedSize);
           >
             {buttonState.text}
           </Button>
-
-          {/* Virtual Try-On Button - Only show for products with colorHex */}
-          {selectedSize?.colorHex && (
+          {selectedColor?.colorHex && (
             <Button
               variant="outline"
               icon={<Camera size={20} />}
@@ -270,7 +223,21 @@ console.log(selectedSize);
               }
             />
           )}
-
+          <Button
+            variant="outline"
+            icon={<Camera size={20} />}
+            onClick={() => setShowFoundationTryOn(true)}
+            aria-label={
+              locale === "ar"
+                ? "تجربة الأساس على وجهك"
+                : "Try this foundation on your face"
+            }
+            title={
+              locale === "ar"
+                ? "تجربة الأساس على وجهك"
+                : "Try this foundation on your face"
+            }
+          />
           <Button
             variant="outline"
             icon={
@@ -289,6 +256,7 @@ console.log(selectedSize);
             }
           />
         </div>
+
         {/* Status Messages */}
         <AnimatePresence mode="wait">
           {showSuccess && (
@@ -310,19 +278,24 @@ console.log(selectedSize);
             />
           )}
         </AnimatePresence>
-        <p>jhgjhg</p>
-        {/* Virtual Try-On Modal */}
-        {selectedSize?.colorHex && (
+        {selectedColor?.colorHex && (
           <VirtualLipstickTryOn
-            colorHex={selectedSize.colorHex}
+            colorHex={selectedColor.colorHex}
             opacity={0.65}
             isActive={showVirtualTryOn}
             onClose={() => setShowVirtualTryOn(false)}
           />
         )}
+        {selectedColor?.colorHex && (
+          <VirtualFoundationTryOn
+            colorHex={selectedColor?.colorHex}
+            coverage={0.5} // Default 50% coverage
+            isActive={showFoundationTryOn}
+            onClose={() => setShowFoundationTryOn(false)}
+          />
+        )}
       </div>
     );
-  }
-);
+});
 
 ProductActions.displayName = 'ProductActions';
