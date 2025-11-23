@@ -182,6 +182,86 @@ export const VirtualFoundationTryOn = ({
       overlayCtx.closePath();
     });
 
+    // EXCLUDE LEFT EYEBROW - Complete eyebrow area
+    const leftEyebrow = [
+      70, 63, 105, 66, 107, 55, 65, 52, 53, 46,
+      // Top of eyebrow
+      124, 35, 111, 117, 118, 119, 120, 121, 128,
+      // Connect back through forehead area
+      156, 70,
+    ];
+
+    overlayCtx.moveTo(
+      getLandmark(leftEyebrow[0]).x,
+      getLandmark(leftEyebrow[0]).y
+    );
+    leftEyebrow.forEach((index, i) => {
+      if (i > 0) {
+        overlayCtx.lineTo(getLandmark(index).x, getLandmark(index).y);
+      }
+    });
+    overlayCtx.closePath();
+
+    // EXCLUDE LEFT EYE - Complete eye area including eyelids
+    const leftEye = [
+      // Upper eyelid
+      243, 112, 26, 22, 23, 24, 110, 25,
+      // Outer corner
+      130,
+      // Lower eyelid
+      247, 30, 29, 27, 28, 56, 190,
+      // Complete the loop back
+      243,
+    ];
+
+    overlayCtx.moveTo(getLandmark(leftEye[0]).x, getLandmark(leftEye[0]).y);
+    leftEye.forEach((index, i) => {
+      if (i > 0) {
+        overlayCtx.lineTo(getLandmark(index).x, getLandmark(index).y);
+      }
+    });
+    overlayCtx.closePath();
+
+    // EXCLUDE RIGHT EYEBROW - Complete eyebrow area
+    const rightEyebrow = [
+      300, 293, 334, 296, 336, 285, 295, 282, 283, 276,
+      // Top of eyebrow
+      353, 265, 340, 346, 347, 348, 349, 350, 357,
+      // Connect back through forehead area
+      383, 300,
+    ];
+
+    overlayCtx.moveTo(
+      getLandmark(rightEyebrow[0]).x,
+      getLandmark(rightEyebrow[0]).y
+    );
+    rightEyebrow.forEach((index, i) => {
+      if (i > 0) {
+        overlayCtx.lineTo(getLandmark(index).x, getLandmark(index).y);
+      }
+    });
+    overlayCtx.closePath();
+
+    // EXCLUDE RIGHT EYE - Complete eye area including eyelids
+    const rightEye = [
+      // Upper eyelid
+      463, 341, 256, 252, 253, 254, 339, 255,
+      // Outer corner
+      359,
+      // Lower eyelid
+      467, 260, 259, 257, 258, 286, 414,
+      // Complete the loop back
+      463,
+    ];
+
+    overlayCtx.moveTo(getLandmark(rightEye[0]).x, getLandmark(rightEye[0]).y);
+    rightEye.forEach((index, i) => {
+      if (i > 0) {
+        overlayCtx.lineTo(getLandmark(index).x, getLandmark(index).y);
+      }
+    });
+    overlayCtx.closePath();
+
     // EXCLUDE LEFT EYE AND EYEBROW - MASSIVE AREA
     const leftEyeFull = [
       // Eyebrow area - very wide
